@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>City Pulse</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+body {
+    background: radial-gradient(circle at top, #24385a 0%, #162033 60%, #0e1626 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: white;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* ==== COIN WRAPPER ==== */
+.coin-wrapper {
+    position: absolute;
+    top: 25px;
+    left: 25px;
+    width: 120px;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Gold glow */
+.coin-wrapper::before {
+    content: "";
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,184,28,0.6) 0%, rgba(255,184,28,0.2) 40%, transparent 70%);
+    z-index: 0;
+}
+
+/* Gradient ring halo */
+.coin-wrapper::after {
+    content: "";
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: 3px solid rgba(255,184,28,0.5);
+    box-shadow: 0 0 15px rgba(255,184,28,0.4);
+}
+
+/* Floating animation */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+    100% { transform: translateY(0px); }
+}
+
+.coin {
+    width: 100px;
+    border-radius: 50%;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.6);
+    animation: float 4s ease-in-out infinite;
+    position: relative;
+    z-index: 2;
+}
+
+/* ==== MAIN CONTENT ==== */
+.container {
+    width: 100%;
+    max-width: 420px;
+    margin: 180px auto 0 auto;
+    text-align: center;
+}
+
+h1 {
+    font-size: 30px;
+    margin-bottom: 15px;
+    background: linear-gradient(90deg, #ffb81c, #ff7a00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 700;
+}
+
+.message {
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 28px;
+    opacity: 0.95;
+}
+
+.highlight {
+    font-weight: bold;
+    margin: 14px 0;
+    color: #ffb81c;
+}
+
+/* ==== INPUT ==== */
+input {
+    width: 100%;
+    padding: 16px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 18px;
+    outline: none;
+    background: #f2f2f2;
+}
+
+input:focus {
+    box-shadow: 0 0 0 3px rgba(255,184,28,0.6);
+}
+
+/* ==== BUTTON ==== */
+button {
+    width: 100%;
+    padding: 16px;
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #28a745, #1e7e34);
+    color: white;
+    cursor: pointer;
+    transition: 0.25s ease;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.4);
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 22px rgba(0,0,0,0.5);
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+.share {
+    margin-top: 18px;
+    font-size: 13px;
+    opacity: 0.85;
+}
+
+/* Smaller phones */
+@media (max-width: 400px) {
+    .coin-wrapper {
+        width: 100px;
+        height: 100px;
+    }
+
+    .coin {
+        width: 85px;
+    }
+
+    .container {
+        margin-top: 160px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="coin-wrapper">
+    <img src="c5e364a1-eced-4169-b7de-2200250d5348.jpg" alt="50 UGX Coin" class="coin">
+</div>
+
+<div class="container">
+
+    <h1>City Pulse</h1>
+
+    <div class="message">
+        When the internet goes dark, Uganda does not pause — it bleeds.
+        Business stalls. Innovation slows. Information freezes.
+        <div class="highlight">
+            Connectivity is no longer optional. It is foundational.
+        </div>
+        City Pulse keeps you informed and prepared — even when the signal is uncertain.
+        <div class="highlight">
+            Stay ahead. Stay aware. Stay connected.
+        </div>
+    </div>
+
+    <input type="tel" id="phone" placeholder="Enter your phone number">
+
+    <button onclick="subscribe()">Subscribe for 50 UGX</button>
+
+    <div class="share">
+        Join the Pulsers. Share with at least 10 others.
+    </div>
+
+</div>
+
+<script>
+function subscribe() {
+    const phone = document.getElementById("phone").value.trim();
+
+    if (!phone) {
+        alert("Please enter your phone number.");
+        return;
+    }
+
+    fetch("http://localhost:5000/pay", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ phone: phone })
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);
+    })
+    .catch(() => {
+        alert("Payment request failed.");
+    });
+}
+</script>
+
+</body>
+</html>
