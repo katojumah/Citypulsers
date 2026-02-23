@@ -18,81 +18,65 @@ body {
     min-height: 100vh;
     padding: 20px;
     color: white;
-    position: relative;
-    overflow-x: hidden;
 }
 
-/* ==== COIN WRAPPER ==== */
+/* ===== COIN ===== */
 .coin-wrapper {
-    position: absolute;
-    top: 25px;
-    left: 25px;
-    width: 120px;
-    height: 120px;
     display: flex;
-    align-items: center;
     justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
-/* Gold glow */
 .coin-wrapper::before {
     content: "";
     position: absolute;
-    width: 140px;
-    height: 140px;
+    width: 160px;
+    height: 160px;
     border-radius: 50%;
     background: radial-gradient(circle, rgba(255,184,28,0.6) 0%, rgba(255,184,28,0.2) 40%, transparent 70%);
     z-index: 0;
 }
 
-/* Gradient ring halo */
-.coin-wrapper::after {
-    content: "";
-    position: absolute;
-    width: 130px;
-    height: 130px;
+.coin {
+    width: 110px;
     border-radius: 50%;
-    border: 3px solid rgba(255,184,28,0.5);
-    box-shadow: 0 0 15px rgba(255,184,28,0.4);
+    animation: float 4s ease-in-out infinite;
+    position: relative;
+    z-index: 1;
 }
 
-/* Floating animation */
 @keyframes float {
     0% { transform: translateY(0px); }
-    50% { transform: translateY(-6px); }
+    50% { transform: translateY(-8px); }
     100% { transform: translateY(0px); }
 }
 
-.coin {
-    width: 100px;
-    border-radius: 50%;
-    box-shadow: 0 12px 25px rgba(0,0,0,0.6);
-    animation: float 4s ease-in-out infinite;
-    position: relative;
-    z-index: 2;
-}
-
-/* ==== MAIN CONTENT ==== */
+/* ===== CONTAINER ===== */
 .container {
     width: 100%;
     max-width: 420px;
-    margin: 180px auto 0 auto;
+    margin: auto;
     text-align: center;
+    padding: 10px;
 }
 
+/* ===== TITLE ===== */
 h1 {
-    font-size: 30px;
-    margin-bottom: 15px;
+    font-size: 32px;
+    margin-bottom: 18px;
     background: linear-gradient(90deg, #ffb81c, #ff7a00);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-weight: 700;
+    background-clip: text;
+    color: transparent;
 }
 
+/* ===== MESSAGE ===== */
 .message {
-    font-size: 15px;
-    line-height: 1.7;
-    margin-bottom: 28px;
+    font-size: 16px;
+    line-height: 1.8;
+    margin-bottom: 30px;
     opacity: 0.95;
 }
 
@@ -100,67 +84,121 @@ h1 {
     font-weight: bold;
     margin: 14px 0;
     color: #ffb81c;
+    font-size: 17px;
 }
 
-/* ==== INPUT ==== */
-input {
+/* ===== INPUTS ===== */
+input, select {
     width: 100%;
-    padding: 16px;
+    padding: 18px;
     font-size: 16px;
-    border-radius: 10px;
+    border-radius: 12px;
     border: none;
     margin-bottom: 18px;
     outline: none;
+}
+
+input {
     background: #f2f2f2;
 }
 
-input:focus {
-    box-shadow: 0 0 0 3px rgba(255,184,28,0.6);
+select {
+    background: #ffffff;
 }
 
-/* ==== BUTTON ==== */
+/* ===== BUTTON ===== */
 button {
     width: 100%;
-    padding: 16px;
+    padding: 18px;
     font-size: 18px;
     font-weight: bold;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.subscribe-btn {
     background: linear-gradient(90deg, #28a745, #1e7e34);
     color: white;
-    cursor: pointer;
-    transition: 0.25s ease;
-    box-shadow: 0 8px 18px rgba(0,0,0,0.4);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
 }
 
-button:hover {
+.subscribe-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 12px 22px rgba(0,0,0,0.5);
 }
 
-button:active {
+.subscribe-btn:active {
     transform: scale(0.97);
 }
 
-.share {
-    margin-top: 18px;
-    font-size: 13px;
-    opacity: 0.85;
+/* ===== POPUP ===== */
+.popup {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(6px);
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
 
-/* Smaller phones */
-@media (max-width: 400px) {
-    .coin-wrapper {
-        width: 100px;
-        height: 100px;
+.popup-content {
+    background: white;
+    color: black;
+    padding: 30px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 380px;
+    text-align: left;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+}
+
+.popup-content h3 {
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+
+.popup-content p {
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+
+.proceed-btn {
+    background: #007bff;
+    color: white;
+    margin-top: 15px;
+}
+
+.close-btn {
+    background: #dc3545;
+    color: white;
+    margin-top: 12px;
+}
+
+/* ===== MOBILE OPTIMIZATION ===== */
+@media (max-width: 480px) {
+
+    body {
+        padding: 15px;
     }
 
-    .coin {
-        width: 85px;
+    h1 {
+        font-size: 28px;
     }
 
-    .container {
-        margin-top: 160px;
+    .message {
+        font-size: 15px;
+    }
+
+    input, select, button {
+        font-size: 16px;
+        padding: 16px;
+    }
+
+    .popup-content {
+        padding: 25px;
     }
 }
 </style>
@@ -169,11 +207,10 @@ button:active {
 <body>
 
 <div class="coin-wrapper">
-    <img src="coin.jpg" alt="50 UGX Coin" class="coin">
+    <img src="coin.jpg" class="coin" alt="50 UGX Coin">
 </div>
 
 <div class="container">
-
     <h1>City Pulse</h1>
 
     <div class="message">
@@ -188,42 +225,91 @@ button:active {
         </div>
     </div>
 
-    <input type="tel" id="phone" placeholder="Enter your phone number">
+    <input type="tel" id="phone" placeholder="Enter your phone number" required>
 
-    <button onclick="subscribe()">Subscribe for 50 UGX</button>
+    <select id="currency">
+        <option value="UGX">UGX</option>
+        <option value="KSH">KSH</option>
+        <option value="TZSH">TZSH</option>
+        <option value="RF">RF</option>
+        <option value="USD">USD</option>
+    </select>
 
-    <div class="share">
-        Join the Pulsers. Share with at least 10 others.
+    <button class="subscribe-btn" onclick="openPopup()" id="subscribeBtn">
+        Subscribe for 50 UGX
+    </button>
+</div>
+
+<!-- Popup -->
+<div class="popup" id="popup">
+    <div class="popup-content">
+        <h3>Subscription Details</h3>
+        <p><strong>Send To:</strong> 0747361054</p>
+        <p><strong>Reason:</strong> Becoming a City Pulser</p>
+        <p><strong>Amount:</strong> <span id="popupAmount">50 UGX</span></p>
+
+        <button class="proceed-btn" onclick="proceed()">Proceed</button>
+        <button class="close-btn" onclick="closePopup()">Cancel</button>
     </div>
-
 </div>
 
 <script>
-function subscribe() {
-    const phone = document.getElementById("phone").value.trim();
+const amounts = {
+    UGX: "50",
+    KSH: "1.8",
+    TZSH: "34.15",
+    RF: "20.16",
+    USD: "0.0138"
+};
 
-    if (!phone) {
-        alert("Please enter your phone number.");
-        return;
+const currencySelect = document.getElementById("currency");
+const subscribeBtn = document.getElementById("subscribeBtn");
+const popupAmount = document.getElementById("popupAmount");
+
+function updateAmount() {
+    const currency = currencySelect.value;
+    const selectedAmount = amounts[currency];
+
+    subscribeBtn.textContent = `Subscribe for ${selectedAmount} ${currency}`;
+    popupAmount.textContent = `${selectedAmount} ${currency}`;
+}
+
+currencySelect.addEventListener("change", updateAmount);
+
+function openPopup(){
+    updateAmount();
+    document.getElementById("popup").style.display="flex";
+}
+
+function closePopup(){
+    document.getElementById("popup").style.display="none";
+}
+
+function proceed(){
+    window.location.href = "tel:0770618553";
+}
+
+// Initialize default
+updateAmount();
+</script>
+<script>
+const form = document.getElementById("myForm");
+
+form.addEventListener("submit", function(e) {
+    e.preventDefault(); // stop default submission first
+
+    const phone = document.getElementById("phone").value.trim();
+    const link = document.getElementById("link").value.trim();
+
+    if (!phone || !link) {
+        alert("All fields are required.");
+        return; // stop execution immediately
     }
 
-    fetch("http://localhost:5000/pay", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ phone: phone })
-    })
-    .then(res => res.json())
-    .then(data => {
-        alert(data.message);
-    })
-    .catch(() => {
-        alert("Payment request failed.");
-    });
-}
+    // If validation passes
+    console.log("Form is valid. Proceeding...");
+    form.submit();
+});
 </script>
-
 </body>
-
 </html>
